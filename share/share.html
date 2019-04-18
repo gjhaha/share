@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
+    <title>猫咪生活</title>
+    <style>
+        * {
+            font-size: 49.5%;
+            padding: 0;
+            margin: 0;
+            background: #F7F7F7;
+        }
+
+        .swiper-container {
+            margin: 1rem;
+            width: 93%;
+            height: 25rem;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: red !important;
+        }
+
+        .yqm {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            margin-top: 2.5rem;
+            margin-left: 3.1rem;
+            margin-right: 3.1rem;
+        }
+
+        .yqm1 {
+            background-color: #FBE2E5;
+            color: #ec1d23;
+            height: 4rem;
+            width: 60%;
+            padding: 1rem 2rem;
+            border-bottom-left-radius: 2rem;
+            border-top-left-radius: 2rem;
+            line-height: 4rem;
+            font-size: 2rem;
+        }
+
+        #a1 {
+            font-size: 1.9rem;
+            background: rgba(255, 255, 255, 0);
+        !important;
+        }
+
+        .yqm2 {
+            background-color: #e24045;
+            color: white;
+            height: 4rem;
+            width: 40%;
+            padding: 1rem 2rem;
+            border-bottom-right-radius: 2rem;
+            border-top-right-radius: 2rem;
+            line-height: 4rem;
+            font-size: 2rem;
+        }
+
+        p {
+            text-align: center;
+            margin: 0.5rem auto;
+            margin-top: 1rem;
+        }
+
+        p img {
+            width: 2rem;
+        }
+
+        p {
+
+            font-size: 1.5rem;
+
+        }
+
+        .xz {
+            text-align: center;
+            background: #F48C90;
+            height: 5rem;
+            color: white;
+            line-height: 3.5rem;
+            border-radius: 2rem;
+            width: 75.5%;
+            margin-left: 12.5%;
+            margin-top: 2rem;
+            font-size: 4rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background: #F48C90;
+            font-size: 2rem;
+        }
+
+        .swiper-pagination.swiper-pagination-bullets {
+            background-color: rgba(255, 255, 255, 0)
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://www.yichaobang.com/static/share/swiper.min.css">
+</head>
+
+<body>
+<div id="share">
+    <div class="swiper-container" style="height: 42rem;margin: 1rem;">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="item in info.imgurl">
+                <img :src='item' alt="" style="width: 100%;height: 100%">
+            </div>
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+
+        <!-- 如果需要导航按钮 -->
+        <!-- <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div> -->
+
+        <!-- 如果需要滚动条 -->
+        <!-- <div class="swiper-scrollbar"></div> -->
+    </div>
+
+
+    <div class="yqm">
+        <div class="yqm1"><span id="a1">{{info.info.kouling}}</span></div>
+        <div class="yqm2 btn" data-clipboard-action="copy" data-clipboard-target="#a1">一键复制</div>
+    </div>
+    <p>长按复制框内文字，启动手机【<img src="https://www.yichaobang.com/static/share/tao.png" alt="">】即可领券购买</p>
+    <!--<div class="xz">-->
+        <!--<a :href="info.url">下载APP（请先复制淘口令）</a>-->
+    <!--</div>-->
+    <!--<div id="searchResult"></div>-->
+</div>
+
+
+</body>
+
+</html>
+
+<script src="https://www.yichaobang.com/static/share/vue.js"></script>
+<script src="https://www.yichaobang.com/static/share/swiper.min.js"></script>
+<script src="https://www.yichaobang.com/static/share/clipboard.min.js"></script>
+<script src="https://www.yichaobang.com/static/js/jquery.js"></script>
+<!--<script src="https://yichao.vmall99.com/static/share/share.js"></script>-->
+<script>
+    // function ss() {
+    //     document.location.href = "{$url}";
+    // }
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return (false);
+    }
+
+    window.onload = function () {
+        var clipboard = new Clipboard('.btn');
+        clipboard.on('success', function (e) {
+            console.log(e);
+            // alert('获取邀请码成功'+e.text)
+
+            document.getElementsByClassName('btn')[0].innerHTML = '复制成功';
+            document.getElementsByClassName('btn')[0].setAttribute('style', 'background-color:rgb(136,195,95)')
+            setTimeout(function () {
+                document.getElementsByClassName('btn')[0].innerHTML = '一键复制';
+                document.getElementsByClassName('btn')[0].setAttribute('style', 'background-color:F3555A')
+            }, 1000)
+            console.log(document.getElementsByClassName('btn')[0])
+        });
+
+        clipboard.on('error', function (e) {
+            console.log(e);
+            alert('获取失败')
+        });
+
+        // share.getInfo();
+        var shareVue = new Vue({
+            el: '#share',
+            data: {
+                info: {
+                    imgurl: [],
+                    info: {},
+                    url: ""
+                }
+            },
+            created: function () {
+                // $.ajax({
+                //     type: "GET",
+                //     url: "https://yichao.vmall99.com/api/home/shareGoodsNew?itemid=585193707768&kouling=%EF%BF%A5yoCebJDRpPY%EF%BF%A5&discountPrice=44.90&amount=5",
+                //     dataType: "json",
+                //     success: function (data) {
+                //         if (data.code == 0) {
+                //             share.info = data.data;
+                //             alert(JSON.stringify(share.info));
+                //             setTimeout(function () {
+                //                 var mySwiper = new Swiper('.swiper-container', {
+                //                     autoplay: {
+                //                         delay: 2000,
+                //                         stopOnLastSlide: false,
+                //                         disableOnInteraction: true,
+                //                     },
+                //                     observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                //                     observeParents: true, //修改swiper的父元素时，自动初始化swiper
+                //                     pagination: {
+                //                         el: '.swiper-pagination',
+                //                     },
+                //
+                //                 })
+                //             }, 100);
+                //         } else {
+                //         }
+                //     },
+                //     error: function (jqXHR) {
+                //         alert("发生错误：" + JSON.stringify(jqXHR));
+                //     }
+                // });
+                this.getInfo();
+            },
+            methods: {
+                getInfo: function () {
+                    var that = this;
+                    $.ajax({
+                        type: "GET",
+                        // url: "https://yichao.vmall99.com/api/home/shareGoodsNew?itemid=585193707768&kouling=%EF%BF%A5yoCebJDRpPY%EF%BF%A5&discountPrice=44.90&amount=5",
+                        url: "https://www.yichaobang.com/api/home/shareGoodsNew?itemid=" + getQueryVariable('itemid') + "&kouling=" + getQueryVariable('kouling') + "&discountPrice=" + getQueryVariable('discountPrice') + "&amount=" + getQueryVariable('amount'),
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 0) {
+                                that.info = data.data;
+                                that.info.imgurl = data.data.imgurl;
+                                setTimeout(function () {
+                                    var mySwiper = new Swiper('.swiper-container', {
+                                        autoplay: {
+                                            delay: 2000,
+                                            stopOnLastSlide: false,
+                                            disableOnInteraction: true,
+                                        },
+                                        observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                                        observeParents: true, //修改swiper的父元素时，自动初始化swiper
+                                        pagination: {
+                                            el: '.swiper-pagination',
+                                        },
+
+                                    })
+                                }, 100);
+                            } else {
+                            }
+                        },
+                        error: function (jqXHR) {
+                            alert("发生错误：" + JSON.stringify(jqXHR));
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+</script>
